@@ -1,0 +1,20 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion rootProject.compileSdkVersion
+  buildToolsVersion rootProject.buildToolsVersion
+
+  defaultConfig {
+    applicationId 'com.jenzz.appstate.sample'
+    minSdkVersion rootProject.minSdkVersion
+    targetSdkVersion rootProject.targetSdkVersion
+    versionCode rootProject.versionCode
+    versionName rootProject.versionName
+  }
+}
+
+dependencies {
+  compile project(':library')
+
+  compile 'com.android.support:appcompat-v7:23.2.0'
+}

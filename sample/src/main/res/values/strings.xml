@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">RxAppState</string>
+  <string name="app_description">Put this app into background and bring it back into foreground.\n\nA toast will be shown for every event.</string>
+
+</resources>
