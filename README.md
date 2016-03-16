@@ -27,7 +27,7 @@ Usage
 -----
 You most probably want to monitor for app state changes in your application's `onCreate()` method
 in which case you also don't need to worry about unsubscribing from the `Observable`.
-Remember that if you subscribe in an `Activity` or `Fragment` don't forget to unsubscribe to avoid memory leaks.:
+Remember that if you subscribe in an `Activity` or `Fragment` don't forget to unsubscribe to avoid memory leaks.
 ```java
 RxAppState.monitor(this).subscribe(new Action1<AppState>() {
     @Override
@@ -67,9 +67,26 @@ Check out the [sample project](https://github.com/jenzz/RxAppState/tree/master/s
 
 Download
 --------
-*- Coming soon -*
+This library is published via [JitPack](https://jitpack.io/#jenzz/RxAppState).
 
-(I'm experimenting with [JitPack](https://jitpack.io))
+**Step 1.** Add the JitPack repository to your project root `build.gradle`:
+
+```groovy
+allprojects {
+  repositories {
+	...
+	maven { url "https://jitpack.io" }
+  }
+}
+```
+
+**Step 2.** Add the dependency to your app `build.gradle`:
+
+```groovy
+dependencies {
+  compile 'com.github.jenzz:RxAppState:1.0.0'
+}
+```
 
 License
 -------
