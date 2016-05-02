@@ -83,7 +83,7 @@ allprojects {
 
 ```groovy
 dependencies {
-  compile 'com.github.jenzz:RxAppState:1.0.1'
+  compile 'com.jenzz:RxAppState:1.0.1'
 }
 ```
 
