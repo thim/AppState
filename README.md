@@ -1,4 +1,4 @@
-RxAppState
+RxAppState [![Build Status](https://travis-ci.org/jenzz/RxAppState.svg?branch=master)](https://travis-ci.org/jenzz/RxAppState)
 ==========
 A simple, reactive Android library based on [RxJava](https://github.com/ReactiveX/RxJava) that monitors app state changes.  
 It notifies subscribers every time the app goes into background and comes back into foreground.
