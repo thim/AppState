@@ -18,7 +18,6 @@ There are two popular discussions on this topic on StackOverflow:
 * [How to detect when an Android app goes to the background and come back to the foreground](http://stackoverflow.com/questions/4414171/how-to-detect-when-an-android-app-goes-to-the-background-and-come-back-to-the-fo)
 * [Checking if an Android application is running in the background](http://stackoverflow.com/questions/3667022/checking-if-an-android-application-is-running-in-the-background)
 
-
 This library internally uses a combination of `ActivityLifecycleCallbacks` and the `onTrimMemory(int level)` callback to identify the current app state.  
 Just check out the source code (mainly: [AppStateRecognizer](https://github.com/jenzz/RxAppState/blob/master/library/src/main/java/com/jenzz/appstate/internal/AppStateRecognizer.java)).
 The implementation is dead simple.
@@ -32,7 +31,7 @@ Remember that if you subscribe in an `Activity` or `Fragment` don't forget to un
 RxAppState.monitor(this).subscribe(new Action1<AppState>() {
     @Override
     public void call(AppState appState) {
-        switch (appState){
+        switch (appState) {
             case FOREGROUND:
                 // Hocus Pocus...
                 break;
@@ -84,7 +83,7 @@ allprojects {
 
 ```groovy
 dependencies {
-  compile 'com.github.jenzz:RxAppState:1.0.0'
+  compile 'com.github.jenzz:RxAppState:1.0.1'
 }
 ```
 
