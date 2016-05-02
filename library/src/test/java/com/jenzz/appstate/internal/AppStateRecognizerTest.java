@@ -41,7 +41,7 @@ public class AppStateRecognizerTest {
   }
 
   @Test
-  public void returnsNullAppStateByDefault() {
-    assertThat(appStateRecognizer.getAppState()).isNull();
+  public void doesNotReturnNullAppStateByDefault() {
+    assertThat(appStateRecognizer.getAppState()).isNotNull();
   }
 }

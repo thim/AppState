@@ -5,11 +5,11 @@ import android.app.Application;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.content.ComponentCallbacks2;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import com.jenzz.appstate.AppState;
 import com.jenzz.appstate.AppStateListener;
 import com.jenzz.appstate.internal.adapters.ActivityLifecycleCallbacksAdapter;
 import com.jenzz.appstate.internal.adapters.ComponentCallbacks2Adapter;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.jenzz.appstate.AppState.BACKGROUND;
 import static com.jenzz.appstate.AppState.FOREGROUND;
@@ -19,8 +19,9 @@ public final class AppStateRecognizer {
   private final ActivityLifecycleCallbacks activityStartedCallback = new ActivityStartedCallback();
   private final ComponentCallbacks2 uiHiddenCallback = new UiHiddenCallback();
 
-  private AppState appState;
+  private AppState appState = BACKGROUND;
   private AppStateListener appStateListener;
+  private AtomicBoolean isFirstLaunch = new AtomicBoolean(true);
 
   public void start(@NonNull Application app, @NonNull AppStateListener appStateListener) {
     this.appStateListener = appStateListener;
@@ -34,7 +35,7 @@ public final class AppStateRecognizer {
     app.unregisterComponentCallbacks(uiHiddenCallback);
   }
 
-  @Nullable
+  @NonNull
   public AppState getAppState() {
     return appState;
   }
@@ -43,6 +44,10 @@ public final class AppStateRecognizer {
 
     @Override
     public void onActivityStarted(Activity activity) {
+      if (isFirstLaunch.compareAndSet(true, false)) {
+        appState = FOREGROUND;
+      }
+
       if (appState == BACKGROUND) {
         appState = FOREGROUND;
         appStateListener.onAppDidEnterForeground();
