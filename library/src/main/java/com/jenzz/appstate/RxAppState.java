@@ -15,7 +15,7 @@ import static com.jenzz.appstate.AppState.FOREGROUND;
  * An app state monitor that keeps track of whenever the application
  * goes into background and comes back into foreground.
  */
-@SuppressWarnings({ "unused", "UnusedReturnValue" })
+@SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess"})
 public final class RxAppState {
 
   private final AppStateRecognizer appStateRecognizer = new AppStateRecognizer();
