@@ -66,7 +66,7 @@ Check out the [sample project](https://github.com/jenzz/RxAppState/tree/master/s
 
 Download
 --------
-This library is published via [JitPack](https://jitpack.io/#jenzz/RxAppState).
+This library is published via [JitPack](https://jitpack.io/#com.jenzz/RxAppState).
 
 **Step 1.** Add the JitPack repository to your project root `build.gradle`:
 
