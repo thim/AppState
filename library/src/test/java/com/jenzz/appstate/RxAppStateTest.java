@@ -7,12 +7,12 @@ import org.robolectric.annotation.Config;
 import rx.observers.TestSubscriber;
 
 import static android.content.ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static android.os.Build.VERSION_CODES.M;
 import static com.jenzz.appstate.AppState.BACKGROUND;
 import static org.robolectric.RuntimeEnvironment.application;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = LOLLIPOP)
+@Config(constants = BuildConfig.class, sdk = M)
 public class RxAppStateTest {
 
   @Test
