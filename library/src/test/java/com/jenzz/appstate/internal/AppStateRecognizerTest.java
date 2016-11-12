@@ -2,10 +2,14 @@ package com.jenzz.appstate.internal;
 
 import android.app.Application;
 import android.app.Application.ActivityLifecycleCallbacks;
+import android.content.BroadcastReceiver;
 import android.content.ComponentCallbacks2;
 import android.content.Intent;
+import android.content.IntentFilter;
+
 import com.jenzz.appstate.AppStateListener;
 import com.jenzz.appstate.dummies.DummyAppStateListener;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -36,11 +40,12 @@ public class AppStateRecognizerTest {
   }
 
   @Test
-  public void registerCallbacks() {
+  public void registersCallbacks() {
     appStateRecognizer.start(mockApplication, new DummyAppStateListener());
 
     verify(mockApplication).registerActivityLifecycleCallbacks(any(ActivityLifecycleCallbacks.class));
     verify(mockApplication).registerComponentCallbacks(any(ComponentCallbacks2.class));
+    verify(mockApplication).registerReceiver(any(BroadcastReceiver.class), any(IntentFilter.class));
   }
 
   @Test
@@ -49,6 +54,7 @@ public class AppStateRecognizerTest {
 
     verify(mockApplication).unregisterActivityLifecycleCallbacks(any(ActivityLifecycleCallbacks.class));
     verify(mockApplication).unregisterComponentCallbacks(any(ComponentCallbacks2.class));
+    verify(mockApplication).unregisterReceiver(any(BroadcastReceiver.class));
   }
 
   @Test
