@@ -40,6 +40,7 @@ public final class AppStateRecognizer {
   public void stop(@NonNull Application app) {
     app.unregisterActivityLifecycleCallbacks(activityStartedCallback);
     app.unregisterComponentCallbacks(uiHiddenCallback);
+    app.unregisterReceiver(screenOffBroadcastReceiver);
   }
 
   @NonNull
@@ -85,7 +86,9 @@ public final class AppStateRecognizer {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-      onAppDidEnterBackground();
+      if (appState == FOREGROUND) {
+        onAppDidEnterBackground();
+      }
     }
   }
 }
