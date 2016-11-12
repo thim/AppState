@@ -2,7 +2,7 @@ package com.jenzz.appstate;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import rx.observers.TestSubscriber;
 
@@ -11,7 +11,7 @@ import static android.os.Build.VERSION_CODES.M;
 import static com.jenzz.appstate.AppState.BACKGROUND;
 import static org.robolectric.RuntimeEnvironment.application;
 
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = M)
 public class RxAppStateTest {
 

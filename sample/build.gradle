@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-  compileSdkVersion rootProject.compileSdkVersion
+  compileSdkVersion rootProject.androidSdkVersion
   buildToolsVersion rootProject.buildToolsVersion
 
   defaultConfig {
     applicationId 'com.jenzz.appstate.sample'
     minSdkVersion rootProject.minSdkVersion
-    targetSdkVersion rootProject.targetSdkVersion
+    targetSdkVersion rootProject.androidSdkVersion
     versionCode rootProject.versionCode
     versionName rootProject.versionName
   }
