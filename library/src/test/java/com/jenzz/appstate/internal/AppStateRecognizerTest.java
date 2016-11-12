@@ -1,5 +1,6 @@
 package com.jenzz.appstate.internal;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.content.BroadcastReceiver;
@@ -31,6 +32,7 @@ public class AppStateRecognizerTest {
   @Mock AppStateListener mockAppStateListener;
 
   @Captor ArgumentCaptor<ComponentCallbacks2> componentCallbacksCaptor;
+  @Captor ArgumentCaptor<ActivityLifecycleCallbacks> activityCallbacksCaptor;
 
   private final AppStateRecognizer appStateRecognizer = new AppStateRecognizer();
 
@@ -81,5 +83,28 @@ public class AppStateRecognizerTest {
     mockApplication.sendBroadcast(new Intent(ACTION_SCREEN_OFF));
 
     verify(mockAppStateListener, times(1)).onAppDidEnterBackground();
+  }
+
+  @Test
+  public void emitsForegroundIfActivityStartsOnFirstLaunch() {
+    appStateRecognizer.start(mockApplication, mockAppStateListener);
+    verify(mockApplication).registerActivityLifecycleCallbacks(activityCallbacksCaptor.capture());
+
+    activityCallbacksCaptor.getValue().onActivityStarted(new Activity());
+
+    verify(mockAppStateListener).onAppDidEnterForeground();
+  }
+
+  @Test
+  public void doesNotEmitForegroundIfActivityStartsOnSuccessiveLaunches() {
+    appStateRecognizer.start(mockApplication, mockAppStateListener);
+    verify(mockApplication).registerActivityLifecycleCallbacks(activityCallbacksCaptor.capture());
+    final ActivityLifecycleCallbacks lifecycleCallbacks = activityCallbacksCaptor.getValue();
+    
+    lifecycleCallbacks.onActivityStarted(new Activity());
+    lifecycleCallbacks.onActivityStarted(new Activity());
+    lifecycleCallbacks.onActivityStarted(new Activity());
+
+    verify(mockAppStateListener, times(1)).onAppDidEnterForeground();
   }
 }

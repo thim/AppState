@@ -63,7 +63,8 @@ public final class AppStateRecognizer {
     @Override
     public void onActivityStarted(Activity activity) {
       if (isFirstLaunch.compareAndSet(true, false)) {
-        appState = FOREGROUND;
+        onAppDidEnterForeground();
+        return;
       }
 
       if (appState == BACKGROUND) {
