@@ -2,14 +2,17 @@ package com.jenzz.appstate;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
-import com.jenzz.appstate.internal.rx.AppStateOnSubscribe;
+
+import com.jenzz.appstate.internal.rx.AppStateEmitter;
 import com.jenzz.appstate.internal.AppStateRecognizer;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 import rx.Observable;
 
 import static com.jenzz.appstate.AppState.BACKGROUND;
 import static com.jenzz.appstate.AppState.FOREGROUND;
+import static rx.Emitter.BackpressureMode.LATEST;
 
 /**
  * An app state monitor that keeps track of whenever the application
@@ -22,8 +25,6 @@ public final class RxAppState {
   private final AppStateListener internalAppStateListener = new InternalAppStateListener();
   private final List<AppStateListener> listeners = new CopyOnWriteArrayList<>();
   private final Application app;
-
-  private Observable<AppState> observable;
 
   /**
    * Creates a new {@link RxAppState} instance for the given {@link Application}
@@ -122,10 +123,7 @@ public final class RxAppState {
    */
   @NonNull
   public Observable<AppState> asObservable() {
-    if (observable == null) {
-      observable = Observable.create(new AppStateOnSubscribe(this));
-    }
-    return observable;
+    return Observable.fromEmitter(new AppStateEmitter(this), LATEST);
   }
 
   private class InternalAppStateListener implements AppStateListener {
