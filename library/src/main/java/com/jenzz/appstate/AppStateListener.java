@@ -14,4 +14,10 @@ public interface AppStateListener {
    * Called whenever the app goes into background.
    */
   void onAppDidEnterBackground();
+
+  //@formatter:off
+  AppStateListener NO_OP = new AppStateListener() {
+    @Override public void onAppDidEnterForeground() {}
+    @Override public void onAppDidEnterBackground() {}
+  };//@formatter:on
 }

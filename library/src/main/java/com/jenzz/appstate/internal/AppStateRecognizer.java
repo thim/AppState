@@ -9,25 +9,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.annotation.NonNull;
+import android.support.annotation.RestrictTo;
+
 import com.jenzz.appstate.AppState;
 import com.jenzz.appstate.AppStateListener;
-import com.jenzz.appstate.internal.adapters.ActivityLifecycleCallbacksAdapter;
-import com.jenzz.appstate.internal.adapters.ComponentCallbacks2Adapter;
+import com.jenzz.appstate.internal.adapters.NoOpActivityLifecycleCallbacks;
+import com.jenzz.appstate.internal.adapters.NoOpComponentCallbacks2;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static android.content.Intent.ACTION_SCREEN_OFF;
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 import static com.jenzz.appstate.AppState.BACKGROUND;
 import static com.jenzz.appstate.AppState.FOREGROUND;
 
+@RestrictTo(GROUP_ID)
 public final class AppStateRecognizer {
 
-  private final ActivityLifecycleCallbacks activityStartedCallback = new ActivityStartedCallback();
-  private final ComponentCallbacks2 uiHiddenCallback = new UiHiddenCallback();
-  private final BroadcastReceiver screenOffBroadcastReceiver = new ScreenOffBroadcastReceiver();
+  @NonNull private final ActivityLifecycleCallbacks activityStartedCallback = new ActivityStartedCallback();
+  @NonNull private final ComponentCallbacks2 uiHiddenCallback = new UiHiddenCallback();
+  @NonNull private final BroadcastReceiver screenOffBroadcastReceiver = new ScreenOffBroadcastReceiver();
+  @NonNull private final AtomicBoolean isFirstLaunch = new AtomicBoolean(true);
 
-  private AppState appState = BACKGROUND;
-  private AppStateListener appStateListener;
-  private AtomicBoolean isFirstLaunch = new AtomicBoolean(true);
+  @NonNull private AppState appState = BACKGROUND;
+  @NonNull private AppStateListener appStateListener = AppStateListener.NO_OP;
 
   public void start(@NonNull Application app, @NonNull AppStateListener appStateListener) {
     this.appStateListener = appStateListener;
@@ -58,7 +62,7 @@ public final class AppStateRecognizer {
     appStateListener.onAppDidEnterBackground();
   }
 
-  private class ActivityStartedCallback extends ActivityLifecycleCallbacksAdapter {
+  private class ActivityStartedCallback extends NoOpActivityLifecycleCallbacks {
 
     @Override
     public void onActivityStarted(Activity activity) {
@@ -73,7 +77,7 @@ public final class AppStateRecognizer {
     }
   }
 
-  private class UiHiddenCallback extends ComponentCallbacks2Adapter {
+  private class UiHiddenCallback extends NoOpComponentCallbacks2 {
 
     @Override
     public void onTrimMemory(int level) {

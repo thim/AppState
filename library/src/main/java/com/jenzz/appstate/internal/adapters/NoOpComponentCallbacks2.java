@@ -2,8 +2,12 @@ package com.jenzz.appstate.internal.adapters;
 
 import android.content.ComponentCallbacks2;
 import android.content.res.Configuration;
+import android.support.annotation.RestrictTo;
 
-public abstract class ComponentCallbacks2Adapter implements ComponentCallbacks2 {
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
+@RestrictTo(GROUP_ID)
+public class NoOpComponentCallbacks2 implements ComponentCallbacks2 {
 
   //@formatter:off
   @Override public void onTrimMemory(int level) {}

@@ -21,10 +21,10 @@ import static rx.Emitter.BackpressureMode.LATEST;
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess"})
 public final class RxAppState {
 
-  private final AppStateRecognizer appStateRecognizer = new AppStateRecognizer();
-  private final AppStateListener internalAppStateListener = new InternalAppStateListener();
-  private final List<AppStateListener> listeners = new CopyOnWriteArrayList<>();
-  private final Application app;
+  @NonNull private final AppStateRecognizer appStateRecognizer = new AppStateRecognizer();
+  @NonNull private final AppStateListener internalAppStateListener = new InternalAppStateListener();
+  @NonNull private final List<AppStateListener> listeners = new CopyOnWriteArrayList<>();
+  @NonNull private final Application app;
 
   /**
    * Creates a new {@link RxAppState} instance for the given {@link Application}
@@ -33,6 +33,7 @@ public final class RxAppState {
    * @return an {@link Observable} that emits {@link AppState} items
    * whenever the app goes into background and comes back into foreground.
    */
+  @NonNull
   public static Observable<AppState> monitor(@NonNull Application application) {
     return create(application).startMonitoring().asObservable();
   }
@@ -42,14 +43,12 @@ public final class RxAppState {
    *
    * @return a new {@link RxAppState} instance
    */
+  @NonNull
   public static RxAppState create(@NonNull Application application) {
     return new RxAppState(application);
   }
 
-  /**
-   * Creates a new {@link RxAppState} instance for the given {@link Application}.
-   */
-  public RxAppState(@NonNull Application app) {
+  private RxAppState(@NonNull Application app) {
     this.app = app;
   }
 

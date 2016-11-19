@@ -3,8 +3,12 @@ package com.jenzz.appstate.internal.adapters;
 import android.app.Activity;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.os.Bundle;
+import android.support.annotation.RestrictTo;
 
-public abstract class ActivityLifecycleCallbacksAdapter implements ActivityLifecycleCallbacks {
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
+@RestrictTo(GROUP_ID)
+public class NoOpActivityLifecycleCallbacks implements ActivityLifecycleCallbacks {
 
   //@formatter:off
   @Override public void onActivityCreated(Activity activity, Bundle savedInstanceState) {}
