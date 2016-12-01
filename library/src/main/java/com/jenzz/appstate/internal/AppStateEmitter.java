@@ -1,11 +1,10 @@
-package com.jenzz.appstate.internal.rx;
+package com.jenzz.appstate.internal;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
 
 import com.jenzz.appstate.AppState;
 import com.jenzz.appstate.AppStateListener;
-import com.jenzz.appstate.RxAppState;
 
 import rx.Emitter;
 import rx.functions.Action1;
@@ -18,10 +17,10 @@ import static com.jenzz.appstate.AppState.FOREGROUND;
 @RestrictTo(GROUP_ID)
 public final class AppStateEmitter implements Action1<Emitter<AppState>> {
 
-  @NonNull private final RxAppState appState;
+  @NonNull private final AppStateRecognizer recognizer;
 
-  public AppStateEmitter(@NonNull RxAppState appState) {
-    this.appState = appState;
+  public AppStateEmitter(@NonNull AppStateRecognizer recognizer) {
+    this.recognizer = recognizer;
   }
 
   @Override
@@ -41,10 +40,10 @@ public final class AppStateEmitter implements Action1<Emitter<AppState>> {
     appStateEmitter.setCancellation(new Cancellable() {
       @Override
       public void cancel() throws Exception {
-        appState.removeListener(appStateListener);
+        recognizer.removeListener(appStateListener);
       }
     });
 
-    appState.addListener(appStateListener);
+    recognizer.addListener(appStateListener);
   }
 }

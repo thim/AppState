@@ -28,7 +28,7 @@ You most probably want to monitor for app state changes in your application's `o
 in which case you also don't need to worry about unsubscribing from the `Observable`.
 Remember that if you subscribe in an `Activity` or `Fragment` don't forget to unsubscribe to avoid memory leaks.
 ```java
-RxAppState.monitor(this).subscribe(new Action1<AppState>() {
+RxAppStateMonitor.monitor(this).subscribe(new Action1<AppState>() {
     @Override
     public void call(AppState appState) {
         switch (appState) {
@@ -45,8 +45,8 @@ RxAppState.monitor(this).subscribe(new Action1<AppState>() {
 
 If you haven't jumped onto the hip RX bandwagon yet, you can also register oldskool callback listeners:
 ```java
-RxAppState appState = RxAppState.create(this);
-appState.addListener(new AppStateListener() {
+AppStateMonitor appStateMonitor = RxAppStateMonitor.create(this);
+appStateMonitor.addListener(new AppStateListener() {
     @Override
     public void onAppDidEnterForeground() {
         // ...
@@ -57,7 +57,7 @@ appState.addListener(new AppStateListener() {
         // ...
     }
 });
-appState.startMonitoring();
+appStateMonitor.start();
 ```
 
 Example

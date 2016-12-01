@@ -8,7 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
-import com.jenzz.appstate.RxAppState;
+
+import com.jenzz.appstate.AppStateMonitor;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     pickImageButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        getAppState().stopMonitoring();
+        getAppStateMonitor().stop();
         pickImage();
       }
     });
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    getAppState().startMonitoring();
+    getAppStateMonitor().start();
     if (resultCode == RESULT_OK && requestCode == RESULT_CODE_PICK_IMAGE) {
       showImage(data.getData());
     }
@@ -61,5 +62,5 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  private RxAppState getAppState() {return ((SampleApplication) getApplication()).getAppState();}
+  private AppStateMonitor getAppStateMonitor() {return ((SampleApplication) getApplication()).getAppStateMonitor();}
 }

@@ -6,7 +6,8 @@ import android.widget.Toast;
 
 import com.jenzz.appstate.AppState;
 import com.jenzz.appstate.AppStateListener;
-import com.jenzz.appstate.RxAppState;
+import com.jenzz.appstate.AppStateMonitor;
+import com.jenzz.appstate.RxAppStateMonitor;
 
 import rx.functions.Action1;
 
@@ -16,16 +17,16 @@ import static com.jenzz.appstate.AppState.FOREGROUND;
 
 public class SampleApplication extends Application {
 
-  private static final String TAG = "RxAppState";
+  private static final String TAG = "RxAppStateMonitor";
 
-  private RxAppState appState;
+  private AppStateMonitor appStateMonitor;
 
   @Override
   public void onCreate() {
     super.onCreate();
 
     // RX sample
-    RxAppState.monitor(this).subscribe(new Action1<AppState>() {
+    RxAppStateMonitor.monitor(this).subscribe(new Action1<AppState>() {
       @Override
       public void call(AppState appState) {
         // Hocus, Pocus, Abracadabra!
@@ -33,13 +34,13 @@ public class SampleApplication extends Application {
     });
 
     // Callback sample
-    appState = RxAppState.create(this)
-        .addListener(new SampleAppStateListener())
-        .startMonitoring();
+    appStateMonitor = RxAppStateMonitor.create(this);
+    appStateMonitor.addListener(new SampleAppStateListener());
+    appStateMonitor.start();
   }
 
-  public RxAppState getAppState() {
-    return appState;
+  public AppStateMonitor getAppStateMonitor() {
+    return appStateMonitor;
   }
 
   private class SampleAppStateListener implements AppStateListener {
