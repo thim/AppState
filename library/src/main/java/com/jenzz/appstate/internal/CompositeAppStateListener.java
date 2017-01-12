@@ -8,9 +8,9 @@ import com.jenzz.appstate.AppStateListener;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+import static android.support.annotation.RestrictTo.Scope.LIBRARY;
 
-@RestrictTo(GROUP_ID)
+@RestrictTo(LIBRARY)
 class CompositeAppStateListener implements AppStateListener {
 
   @NonNull private final List<AppStateListener> listeners = new CopyOnWriteArrayList<>();

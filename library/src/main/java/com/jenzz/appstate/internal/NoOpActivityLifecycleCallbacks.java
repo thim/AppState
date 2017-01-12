@@ -5,9 +5,9 @@ import android.app.Application.ActivityLifecycleCallbacks;
 import android.os.Bundle;
 import android.support.annotation.RestrictTo;
 
-import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+import static android.support.annotation.RestrictTo.Scope.LIBRARY;
 
-@RestrictTo(GROUP_ID)
+@RestrictTo(LIBRARY)
 class NoOpActivityLifecycleCallbacks implements ActivityLifecycleCallbacks {
 
   //@formatter:off

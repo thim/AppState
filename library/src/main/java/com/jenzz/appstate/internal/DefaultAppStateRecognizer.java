@@ -17,11 +17,11 @@ import com.jenzz.appstate.AppStateListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static android.content.Intent.ACTION_SCREEN_OFF;
-import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+import static android.support.annotation.RestrictTo.Scope.LIBRARY;
 import static com.jenzz.appstate.AppState.BACKGROUND;
 import static com.jenzz.appstate.AppState.FOREGROUND;
 
-@RestrictTo(GROUP_ID)
+@RestrictTo(LIBRARY)
 public final class DefaultAppStateRecognizer implements AppStateRecognizer {
 
   @NonNull private final CompositeAppStateListener compositeListener = new CompositeAppStateListener();

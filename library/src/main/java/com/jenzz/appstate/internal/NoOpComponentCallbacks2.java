@@ -4,9 +4,9 @@ import android.content.ComponentCallbacks2;
 import android.content.res.Configuration;
 import android.support.annotation.RestrictTo;
 
-import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+import static android.support.annotation.RestrictTo.Scope.LIBRARY;
 
-@RestrictTo(GROUP_ID)
+@RestrictTo(LIBRARY)
 class NoOpComponentCallbacks2 implements ComponentCallbacks2 {
 
   //@formatter:off

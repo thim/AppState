@@ -1,5 +1,6 @@
 package com.jenzz.appstate.fakes;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.ComponentCallbacks;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import rx.functions.Action1;
 
+@SuppressLint("Registered")
 public class FakeApplication extends Application {
 
   @NonNull private final List<ActivityLifecycleCallbacks> activityLifecycleCallbacks = new ArrayList<>();

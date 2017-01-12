@@ -3,7 +3,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.2.0'
+    classpath 'com.android.tools.build:gradle:2.2.3'
   }
 }
 
@@ -19,10 +19,10 @@ task wrapper(type: Wrapper) {
 
 ext {
   androidSdkVersion = 25
-  buildToolsVersion = '25.0.0'
+  buildToolsVersion = '25.0.2'
   minSdkVersion = 14
   versionCode = 4
   versionName = '2.0.0'
 
-  supportLibraryVersion = '25.0.1'
+  supportLibraryVersion = '25.1.0'
 }

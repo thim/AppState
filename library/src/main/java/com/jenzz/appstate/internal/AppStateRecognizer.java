@@ -7,9 +7,9 @@ import android.support.annotation.RestrictTo;
 import com.jenzz.appstate.AppState;
 import com.jenzz.appstate.AppStateListener;
 
-import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+import static android.support.annotation.RestrictTo.Scope.LIBRARY;
 
-@RestrictTo(GROUP_ID)
+@RestrictTo(LIBRARY)
 public interface AppStateRecognizer {
 
   void addListener(@NonNull AppStateListener listener);

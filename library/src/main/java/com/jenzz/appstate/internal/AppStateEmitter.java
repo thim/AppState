@@ -10,11 +10,11 @@ import rx.Emitter;
 import rx.functions.Action1;
 import rx.functions.Cancellable;
 
-import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+import static android.support.annotation.RestrictTo.Scope.LIBRARY;
 import static com.jenzz.appstate.AppState.BACKGROUND;
 import static com.jenzz.appstate.AppState.FOREGROUND;
 
-@RestrictTo(GROUP_ID)
+@RestrictTo(LIBRARY)
 public final class AppStateEmitter implements Action1<Emitter<AppState>> {
 
   @NonNull private final AppStateRecognizer recognizer;
