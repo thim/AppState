@@ -7,7 +7,6 @@ import com.jenzz.appstate.stubs.StubAppStateRecognizer;
 
 import org.junit.Test;
 
-import rx.functions.Action1;
 import rx.observers.TestSubscriber;
 
 import static com.jenzz.appstate.AppState.BACKGROUND;
@@ -16,23 +15,8 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class RxAppStateMonitorTest {
 
-  private static final Action1<AppStateListener> ACTION_FOREGROUND = new Action1<AppStateListener>() {
-    @Override
-    public void call(AppStateListener appStateListener) {
-      appStateListener.onAppDidEnterForeground();
-    }
-  };
-  private static final Action1<AppStateListener> ACTION_BACKGROUND = new Action1<AppStateListener>() {
-    @Override
-    public void call(AppStateListener appStateListener) {
-      appStateListener.onAppDidEnterBackground();
-    }
-  };
-
   @NonNull private final StubAppStateRecognizer stubRecognizer = new StubAppStateRecognizer();
-  @NonNull private final AppStateMonitor appStateMonitor = new RxAppStateMonitor(new FakeApplication(), stubRecognizer);
-
-  @NonNull private final TestSubscriber<AppState> subscriber = TestSubscriber.create();
+  @NonNull private final AppStateMonitor appStateMonitor = new RxAppStateMonitor(stubRecognizer);
 
   @Test
   public void startsAndStopsMonitoring() {
@@ -75,22 +59,15 @@ public class RxAppStateMonitorTest {
   }
 
   @Test
-  public void emitsForeground() {
-    appStateMonitor.asObservable().subscribe(subscriber);
+  public void emitsAppStates() {
+    FakeApplication fakeApplication = new FakeApplication();
+    TestSubscriber<AppState> subscriber = TestSubscriber.create();
+    RxAppStateMonitor.monitor(fakeApplication).subscribe(subscriber);
 
-    stubRecognizer.notifyAppStateListener(ACTION_FOREGROUND);
+    fakeApplication.goForeground();
+    fakeApplication.goBackground();
 
-    subscriber.assertValue(FOREGROUND);
-    subscriber.assertNoTerminalEvent();
-  }
-
-  @Test
-  public void emitsBackground() {
-    appStateMonitor.asObservable().subscribe(subscriber);
-
-    stubRecognizer.notifyAppStateListener(ACTION_BACKGROUND);
-
-    subscriber.assertValue(BACKGROUND);
+    subscriber.assertValues(FOREGROUND, BACKGROUND);
     subscriber.assertNoTerminalEvent();
   }
 }

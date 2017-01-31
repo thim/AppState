@@ -30,7 +30,13 @@ public final class DefaultAppStateRecognizer implements AppStateRecognizer {
   @NonNull private final BroadcastReceiver screenOffBroadcastReceiver = new ScreenOffBroadcastReceiver();
   @NonNull private final AtomicBoolean isFirstLaunch = new AtomicBoolean(true);
 
+  @NonNull private final Application app;
+
   @NonNull private AppState appState = BACKGROUND;
+
+  public DefaultAppStateRecognizer(@NonNull Application app) {
+    this.app = app;
+  }
 
   @Override
   public void addListener(@NonNull AppStateListener listener) {
@@ -43,14 +49,14 @@ public final class DefaultAppStateRecognizer implements AppStateRecognizer {
   }
 
   @Override
-  public void start(@NonNull Application app) {
+  public void start() {
     app.registerActivityLifecycleCallbacks(activityStartedCallback);
     app.registerComponentCallbacks(uiHiddenCallback);
     app.registerReceiver(screenOffBroadcastReceiver, new IntentFilter(ACTION_SCREEN_OFF));
   }
 
   @Override
-  public void stop(@NonNull Application app) {
+  public void stop() {
     app.unregisterActivityLifecycleCallbacks(activityStartedCallback);
     app.unregisterComponentCallbacks(uiHiddenCallback);
     app.unregisterReceiver(screenOffBroadcastReceiver);

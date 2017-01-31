@@ -1,6 +1,5 @@
 package com.jenzz.appstate.internal;
 
-import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
 
@@ -16,9 +15,9 @@ public interface AppStateRecognizer {
 
   void removeListener(@NonNull AppStateListener listener);
 
-  void start(@NonNull Application app);
+  void start();
 
-  void stop(@NonNull Application app);
+  void stop();
 
   @NonNull AppState getAppState();
 }

@@ -1,8 +1,5 @@
 package com.jenzz.appstate.internal;
 
-import android.app.Activity;
-import android.app.Application.ActivityLifecycleCallbacks;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.jenzz.appstate.AppState;
@@ -13,12 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import rx.functions.Action1;
-
 import static android.content.ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN;
-import static android.content.Intent.ACTION_SCREEN_OFF;
 import static com.jenzz.appstate.AppState.BACKGROUND;
 import static com.jenzz.appstate.AppState.FOREGROUND;
+import static com.jenzz.appstate.fakes.FakeApplication.ACTIVITY_STARTED;
+import static com.jenzz.appstate.fakes.FakeApplication.SCREEN_OFF;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -28,25 +24,17 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class DefaultAppStateRecognizerLogicTest {
 
-  private static final Action1<ActivityLifecycleCallbacks> ACTIVITY_STARTED =
-          new Action1<ActivityLifecycleCallbacks>() {
-            @Override
-            public void call(ActivityLifecycleCallbacks activityLifecycleCallbacks) {
-              activityLifecycleCallbacks.onActivityStarted(new Activity());
-            }
-          };
-  private static final Intent SCREEN_OFF = new Intent(ACTION_SCREEN_OFF);
-
-  @NonNull private final DefaultAppStateRecognizer recognizer = new DefaultAppStateRecognizer();
   @NonNull private final FakeApplication fakeApplication = new FakeApplication();
+  @NonNull private final DefaultAppStateRecognizer recognizer = new DefaultAppStateRecognizer(fakeApplication);
 
   @Mock private AppStateListener mockListener;
 
   @Before
   public void setUp() {
     initMocks(this);
+
     recognizer.addListener(mockListener);
-    recognizer.start(fakeApplication);
+    recognizer.start();
   }
 
   @Test
@@ -129,24 +117,21 @@ public class DefaultAppStateRecognizerLogicTest {
   }
 
   @Test
-  public void removesListener() {
+  public void doesNotNotifyWhenListenerRemoved() {
     givenAppState(BACKGROUND);
 
     recognizer.removeListener(mockListener);
 
-    fakeApplication.notifyActivityLifecycleCallbacks(ACTIVITY_STARTED);
+    fakeApplication.goForeground();
 
     verifyZeroInteractions(mockListener);
   }
 
   private void givenAppState(@NonNull AppState appState) {
-    switch (appState) {
-      case FOREGROUND:
-        fakeApplication.notifyActivityLifecycleCallbacks(ACTIVITY_STARTED);
-        break;
-      case BACKGROUND:
-        // no-op (default state)
-        break;
+    if (appState == FOREGROUND) {
+      fakeApplication.goForeground();
+    } else {
+      fakeApplication.goBackground();
     }
   }
 }

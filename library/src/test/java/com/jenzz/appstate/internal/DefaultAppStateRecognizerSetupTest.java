@@ -16,18 +16,20 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class DefaultAppStateRecognizerSetupTest {
 
-  private final DefaultAppStateRecognizer recognizer = new DefaultAppStateRecognizer();
-
   @Mock private Application mockApplication;
+
+  private DefaultAppStateRecognizer recognizer;
 
   @Before
   public void setUp() {
     initMocks(this);
+
+    recognizer = new DefaultAppStateRecognizer(mockApplication);
   }
 
   @Test
   public void registersCallbacks() {
-    recognizer.start(mockApplication);
+    recognizer.start();
 
     verify(mockApplication).registerActivityLifecycleCallbacks(any(ActivityLifecycleCallbacks.class));
     verify(mockApplication).registerComponentCallbacks(any(ComponentCallbacks2.class));
@@ -36,7 +38,7 @@ public class DefaultAppStateRecognizerSetupTest {
 
   @Test
   public void unregistersCallbacks() {
-    recognizer.stop(mockApplication);
+    recognizer.stop();
 
     verify(mockApplication).unregisterActivityLifecycleCallbacks(any(ActivityLifecycleCallbacks.class));
     verify(mockApplication).unregisterComponentCallbacks(any(ComponentCallbacks2.class));

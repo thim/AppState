@@ -2,8 +2,6 @@ package com.jenzz.appstate;
 
 import android.support.annotation.NonNull;
 
-import rx.Observable;
-
 public interface AppStateMonitor {
 
   void start();
@@ -17,7 +15,4 @@ public interface AppStateMonitor {
   boolean isAppInForeground();
 
   boolean isAppInBackground();
-
-  @NonNull
-  Observable<AppState> asObservable();
 }

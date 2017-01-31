@@ -19,42 +19,38 @@ import static rx.Emitter.BackpressureMode.LATEST;
  * An app state monitor that keeps track of whenever the application
  * goes into background and comes back into foreground.
  */
-@SuppressWarnings({"unused", "WeakerAccess"})
+@SuppressWarnings({"unused"})
 public final class RxAppStateMonitor implements AppStateMonitor {
 
-  @NonNull private final Application app;
   @NonNull private final AppStateRecognizer recognizer;
 
   /**
-   * Creates a new {@link RxAppStateMonitor} instance for the given {@link Application}
-   * and starts monitoring for app state changes.
-   *
-   * @return an {@link Observable} that emits {@link AppState} items
+   * Creates a new {@link Observable} that emits {@link AppState} items
    * whenever the app goes into background and comes back into foreground.
+   *
+   * @return a new {@link Observable}
    */
   @NonNull
-  public static Observable<AppState> monitor(@NonNull Application application) {
-    return create(application).asObservable();
+  public static Observable<AppState> monitor(@NonNull Application app) {
+    return Observable.fromEmitter(new AppStateEmitter(new DefaultAppStateRecognizer(app)), LATEST);
   }
 
-  /**
-   * Creates a new {@link RxAppStateMonitor} instance for the given {@link Application}.
-   *
-   * @return a new {@link RxAppStateMonitor} instance
-   */
+    /**
+     * Creates a new {@link RxAppStateMonitor} instance for the given {@link Application}.
+     *
+     * @return a new {@link RxAppStateMonitor} instance
+     */
   @NonNull
-  public static AppStateMonitor create(@NonNull Application application) {
-    return new RxAppStateMonitor(application);
+  public static AppStateMonitor create(@NonNull Application app) {
+    return new RxAppStateMonitor(app);
   }
 
   private RxAppStateMonitor(@NonNull Application app) {
-    this.app = app;
-    this.recognizer = new DefaultAppStateRecognizer();
+    this.recognizer = new DefaultAppStateRecognizer(app);
   }
 
   @RestrictTo(TESTS)
-  RxAppStateMonitor(@NonNull Application app, @NonNull AppStateRecognizer recognizer) {
-    this.app = app;
+  RxAppStateMonitor(@NonNull AppStateRecognizer recognizer) {
     this.recognizer = recognizer;
   }
 
@@ -63,7 +59,7 @@ public final class RxAppStateMonitor implements AppStateMonitor {
    */
   @Override
   public void start() {
-    recognizer.start(app);
+    recognizer.start();
   }
 
   /**
@@ -71,7 +67,7 @@ public final class RxAppStateMonitor implements AppStateMonitor {
    */
   @Override
   public void stop() {
-    recognizer.stop(app);
+    recognizer.stop();
   }
 
   /**
@@ -108,17 +104,5 @@ public final class RxAppStateMonitor implements AppStateMonitor {
   @Override
   public boolean isAppInBackground() {
     return recognizer.getAppState() == BACKGROUND;
-  }
-
-  /**
-   * Creates a new {@link Observable} that emits {@link AppState} items
-   * whenever the app goes into background and comes back into foreground.
-   *
-   * @return a new {@link Observable}
-   */
-  @NonNull
-  @Override
-  public Observable<AppState> asObservable() {
-    return Observable.fromEmitter(new AppStateEmitter(recognizer), LATEST);
   }
 }

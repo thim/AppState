@@ -1,6 +1,5 @@
 package com.jenzz.appstate.stubs;
 
-import android.app.Application;
 import android.support.annotation.NonNull;
 
 import com.jenzz.appstate.AppState;
@@ -15,6 +14,19 @@ import rx.functions.Action1;
 import static com.jenzz.appstate.AppState.BACKGROUND;
 
 public class StubAppStateRecognizer implements AppStateRecognizer {
+
+  public static final Action1<AppStateListener> ACTION_FOREGROUND = new Action1<AppStateListener>() {
+    @Override
+    public void call(AppStateListener appStateListener) {
+      appStateListener.onAppDidEnterForeground();
+    }
+  };
+  public static final Action1<AppStateListener> ACTION_BACKGROUND = new Action1<AppStateListener>() {
+    @Override
+    public void call(AppStateListener appStateListener) {
+      appStateListener.onAppDidEnterBackground();
+    }
+  };
 
   @NonNull private final List<AppStateListener> listeners = new ArrayList<>();
 
@@ -32,12 +44,12 @@ public class StubAppStateRecognizer implements AppStateRecognizer {
   }
 
   @Override
-  public void start(@NonNull Application app) {
+  public void start() {
     isStarted = true;
   }
 
   @Override
-  public void stop(@NonNull Application app) {
+  public void stop() {
     isStarted = false;
   }
 

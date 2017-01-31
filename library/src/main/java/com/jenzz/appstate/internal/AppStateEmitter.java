@@ -41,9 +41,11 @@ public final class AppStateEmitter implements Action1<Emitter<AppState>> {
       @Override
       public void cancel() throws Exception {
         recognizer.removeListener(appStateListener);
+        recognizer.stop();
       }
     });
 
     recognizer.addListener(appStateListener);
+    recognizer.start();
   }
 }
