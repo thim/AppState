@@ -21,8 +21,8 @@ ext {
   androidSdkVersion = 25
   buildToolsVersion = '25.0.2'
   minSdkVersion = 14
-  versionCode = 4
-  versionName = '2.0.0'
+  versionCode = 5
+  versionName = '2.0.1'
 
   supportLibraryVersion = '25.1.0'
 }

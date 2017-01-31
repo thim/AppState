@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 2.0.1 *(2017/01/31)*
+----------------------------
+* Fix missing call to `AppStateRecognizer.start()` when using RX monitor (#12)
+
 Version 2.0.0 *(2016/12/01)*
 ----------------------------
 * Internal refactor/rewrite to create a more stable, testable architecture
