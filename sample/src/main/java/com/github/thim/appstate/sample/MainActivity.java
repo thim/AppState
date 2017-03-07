@@ -1,4 +1,4 @@
-package com.jenzz.appstate.sample;
+package com.github.thim.appstate.sample;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,7 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.jenzz.appstate.AppStateMonitor;
+import com.github.thim.AppMonitor;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -62,5 +63,5 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  private AppStateMonitor getAppStateMonitor() {return ((SampleApplication) getApplication()).getAppStateMonitor();}
+  private AppMonitor getAppStateMonitor() {return ((SampleApplication) getApplication()).getAppMonitor();}
 }

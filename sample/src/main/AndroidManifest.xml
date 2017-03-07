@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.jenzz.appstate.sample"
+    package="com.github.thim.appstate.sample"
     >
 
   <application
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
-      android:name="com.jenzz.appstate.sample.SampleApplication"
+      android:name="com.github.thim.appstate.sample.SampleApplication"
       android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
       tools:ignore="AllowBackup,GoogleAppIndexingWarning"
       >
     <activity
-        android:name="com.jenzz.appstate.sample.MainActivity"
+        android:name="com.github.thim.appstate.sample.MainActivity"
         android:label="@string/app_name"
         >
       <intent-filter>
